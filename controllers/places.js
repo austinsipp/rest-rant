@@ -1,23 +1,8 @@
 const router = require('express').Router()
+const places = require('../models/places.js')
 
 // we are now at GET /places
-router.get('/', (req, res) => {
-    let places = [{
-        name: 'H-Thai-ML',
-        city: 'Seattle',
-        state: 'WA',
-        cuisines: 'Thai, Pan-Asian',
-        pic: '/images/thai-food.jpg',
-        picSource: 'Photo by <a href="https://unsplash.com/@jomemui?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Jerome Jome</a> on <a href="https://unsplash.com/s/photos/thai-food?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>'
-      }, {
-        name: 'Coding Cat Cafe',
-        city: 'Phoenix',
-        state: 'AZ',
-        cuisines: 'Coffee, Bakery',
-        pic: '/images/coffee-cat.jpg',
-        picSource: 'Photo by <a href="https://unsplash.com/@sarahshull?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Sarah Shull</a> on <a href="https://unsplash.com/s/photos/coffee-cat?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>'
-      }]
-      
+router.get('/', (req, res) => {  
     res.render('places/index', {places})
 })
 
@@ -27,8 +12,22 @@ router.get('/new', (req,res) => {
 })
 
 router.post('/', (req, res) => {
+    console.log(req)
     console.log(req.body)
-    res.send('POST /places')
+    if (!req.body.pic) {
+        //default image
+        req.body.pic = 'http://placekitten.com/400/400'
+    }
+    if (!req.body.city) {
+        //default image
+        req.body.city = 'Anytown'
+    }
+    if (!req.body.state) {
+        //default image
+        req.body.state = 'USA'
+    }
+    places.push(req.body)
+    res.redirect('/places')
   })
   
 
