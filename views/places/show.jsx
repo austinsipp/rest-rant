@@ -7,6 +7,16 @@ function show (data) {
           <main>
             <h1>{data.place.name}</h1>
             <div>
+                <p className='text-center'>
+                    {data.place.cuisines}
+                </p>
+                <img src={data.place.pic} alt={data.place.name}></img>
+                
+                <p className='text-center'>
+                    Located in {data.place.city}, {data.place.state}
+                </p>
+            </div>
+            <div>
                 Rating
             </div>
             <div>
