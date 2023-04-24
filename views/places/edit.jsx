@@ -2,12 +2,13 @@ const React = require('react')
 const Def = require('../default.jsx')
 
 function edit_form (data) {
+    console.log(data)
     return (
         <Def>
           <main>
             <h1>Edit Place</h1>
           </main>
-          <form method="POST" action={`/places/${data.place.id}?_method=PUT`}>
+          <form method="POST" action={`/places/${data.id}?_method=PUT`}>
             <div className="form-group">
                 <label htmlFor="name">Place Name</label>
                 <input 
@@ -53,6 +54,7 @@ function edit_form (data) {
                 value={data.place.cuisines} 
                 required />
             </div>
+            <input type="submit" value="Submit Changes" />
           </form>
 
 
