@@ -1,4 +1,19 @@
-module.exports = [{
+const mongoose = require('mongoose')
+
+const placeSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  pic: String,
+  cuisines: { type: String, required: true },
+  city: { type: String, default: 'Anytown' },
+  state: { type: String, default: 'USA' },
+  founded: Number
+})
+
+module.exports = mongoose.model('Place', placeSchema)
+
+
+
+/*module.exports = [{
     name: 'H-Thai-ML',
     city: 'Seattle',
     state: 'WA',
@@ -12,4 +27,4 @@ module.exports = [{
     cuisines: 'Coffee, Bakery',
     pic: '/images/coffee-cat.jpg',
     picSource: 'Photo by <a href="https://unsplash.com/@sarahshull?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Sarah Shull</a> on <a href="https://unsplash.com/s/photos/coffee-cat?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>'
-  }]
+  }]*/
