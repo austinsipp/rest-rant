@@ -48,6 +48,44 @@ router.get('/:id', (req, res) => {
 })
 
 
+router.get('/:id/comment', (req, res) => {
+  db.Place.findById(req.params.id)
+  .then(place => {
+    res.render('places/comment', { place})
+  })
+  .catch(err => {
+    console.log('error',err)
+    res.render('error404')
+  })
+})
+
+
+router.post('/:id/comment', (req, res) => {
+  console.log("got here")
+  console.log(req.body)
+  console.log(req.params.id)
+  db.Place.findById(req.params.id)
+  .then(place => {
+      db.Comment.create(req.body)
+      .then(comment => {
+          place.comments.push(comment.id)
+          place.save()
+          .then(() => {
+              res.redirect(`/places/${req.params.id}`)
+          })
+      })
+      .catch(err => {
+          res.send(err)
+          //res.render('error404')
+      })
+  })
+  .catch(err => {
+      res.render('error404')
+  })
+})
+
+
+
 router.put('/:id', (req, res) => {
   res.send('PUT /places/:id stub')
 })

@@ -48,10 +48,13 @@ function show (data) {
                 <h2>Comments</h2>
                 {comments}
             </div>
-            <a href={`/places/${data.id}/edit`} className="btn btn-warning"> 
+            <a href={`/places/${data.place.id}/comment`} className="btn btn-warning"> 
+                Make a Comment
+            </a> 
+            <a href={`/places/${data.place.id}/edit`} className="btn btn-warning"> 
                 Edit
             </a> 
-            <form method='POST' action={`/places/${data.id}?_method=DELETE`}> 
+            <form method='POST' action={`/places/${data.place.id}?_method=DELETE`}> 
                 <button type="submit" className="btn btn-danger">
                 Delete
                 </button>
