@@ -64,12 +64,13 @@ router.post('/:id/comment', (req, res) => {
   console.log("got here")
   console.log(req.body)
   console.log(req.params.id)
-  db.Place.findById(req.params.id)
-  .then(place => {
-      db.Comment.create(req.body)
+  db.Place.findById(req.params.id) // We find the document based on place id, which comes from the URL
+  .then(place => { // Once we find it, the promise is fullfiled
+      db.Comment.create(req.body) // We're going to create a new comment document based on the request body. 
       .then(comment => {
-          place.comments.push(comment.id)
-          place.save()
+          place.comments.push(comment.id) // We found the place at line 67, 
+          // we push (aka add at the bottom) a new comment based on what we saved at line 69
+          place.save() // Save the place document (which now includes the new comment id as part of the comments array)
           .then(() => {
               res.redirect(`/places/${req.params.id}`)
           })
@@ -87,16 +88,39 @@ router.post('/:id/comment', (req, res) => {
 
 
 router.put('/:id', (req, res) => {
-  res.send('PUT /places/:id stub')
+  db.Place.findByIdAndUpdate(req.params.id, req.body)
+  .then(() => {
+      res.redirect(`/places/${req.params.id}`)
+  })
+  .catch(err => {
+      console.log('err', err)
+      res.render('error404')
+  })
 })
+
 
 router.delete('/:id', (req, res) => {
-  res.send('DELETE /places/:id stub')
+  db.Place.findByIdAndDelete(req.params.id)
+  .then(place => {
+      res.redirect('/places')
+  })
+  .catch(err => {
+      console.log('err', err)
+      res.render('error404')
+  })
 })
 
+
 router.get('/:id/edit', (req, res) => {
-  res.send('GET edit form stub')
+  db.Place.findById(req.params.id)
+  .then(place => {
+      res.render('places/edit', { place })
+  })
+  .catch(err => {
+      res.render('error404')
+  })
 })
+
 
 router.post('/:id/rant', (req, res) => {
   res.send('GET /places/:id/rant stub')
